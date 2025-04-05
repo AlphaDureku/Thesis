@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_vs_surety_wizard_form" model="ir.ui.view">
+            <field name="name">vs.surety.wizard.form</field>
+            <field name="model">shp.vs_surety_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Borrow Credit">
+                    <div class="alert alert-warning" role="alert">
+                        <p>
+                            <i class="fa fa-exclamation-triangle" title="Important Notice" style="font-size: 20px;"></i>
+                            <strong> Important: </strong> Please ensure that the attached document is authentic and valid before proceeding.
+                        </p>
+                    </div>
+
+                    <group>
+                        <field name="borrow_from_ids" invisible="1"/>
+                        <field name="sale_order_id" readonly="1"/>
+                        <field name="dealer_id" readonly="1"/>
+                        <field name="amount" readonly="1"/>
+                        <field name="borrow_from" domain="['|', ('id', 'in', borrow_from_ids), ('id', '=', False)]" options="{'no_create': True}"/>
+                        <field name="attachment" filename="attachment_filename" required="1"/>
+                        <field name="reason"/>
+
+                    </group>
+                    <footer>
+                        <button string="Confirm" name="action_confirm_borrow" type="object" class="oe_highlight" />
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_borrow_credit" model="ir.actions.act_window">
+            <field name="name">Borrow Credit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shp.vs_surety_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_vs_surety_wizard_form"/>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+    </data>
+</odoo>
